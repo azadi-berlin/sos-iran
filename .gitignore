@@ -1,1 +1,50 @@
 .idea
+
+# Ansible sensitive files
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*_rsa
+*_dsa
+*_ecdsa
+*.vault
+vault_password
+vault_pass
+.vault_pass*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# SSH keys
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+
+# Terraform state files (if added in future)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Credentials and secrets
+credentials
+secrets.yml
+secrets.yaml
+*secret*.yml
+*secret*.yaml
+*password*.yml
+*password*.yaml
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Ansible retry files
+*.retry
