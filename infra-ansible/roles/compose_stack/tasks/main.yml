@@ -1,0 +1,53 @@
+- name: load stack metadata
+  include_vars:
+    file: "../stacks/{{ stack_name }}/stack.yml"
+  ignore_errors: true
+
+- name: Create stack directory
+  file:
+    path: "/opt/{{ stack_name }}"
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Render compose file
+  template:
+    src: "../stacks/{{ stack_name }}/docker-compose.yml.j2"
+    dest: "/opt/{{ stack_name }}/docker-compose.yml"
+
+- name: Create stack extra directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: '0755'
+  loop: "{{ stack_directories | default([]) }}"
+  become: true
+
+- name: Render stack extra files
+  template:
+    src: "../stacks/{{ stack_name }}/files/{{ item.name }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ stack_template_files | default([]) }}"
+
+- name: Pull latest image
+  command:
+    cmd: docker compose pull
+    chdir: "/opt/{{ stack_name }}"
+  register: pull_result
+  become: true
+  changed_when: >
+    'Downloaded newer image' in pull_result.stdout or
+    'Pull complete' in pull_result.stdout
+
+- name: Run docker compose
+  command:
+    cmd: docker compose up -d
+    chdir: "/opt/{{ stack_name }}"
+  register: up_result
+  become: true
+  changed_when: >
+    'Creating' in up_result.stdout or
+    'Recreating' in up_result.stdout or
+    'Starting' in up_result.stdout

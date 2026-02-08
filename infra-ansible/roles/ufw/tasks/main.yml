@@ -1,0 +1,32 @@
+---
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow VPN network
+  community.general.ufw:
+    rule: allow
+    interface: wg0
+    src: 10.100.0.0/16
+    direction: in
+
+- name: Default deny incoming
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+
+- name: Default allow outgoing
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled

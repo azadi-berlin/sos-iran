@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "conduit"
+    static_configs:
+{% for host in groups['conduit'] %}
+      - targets: ["{{ hostvars[host]['vpn_ip'] }}:9090"]
+        labels:
+          node: {{ host }}
+          zone: "{{ hostvars[host]['zone'] | default('N/A') }}"
+          provider: "{{ hostvars[host]['provider'] | default('N/A') }}"
+          country: "{{ hostvars[host]['country'] | default('N/A') }}"
+          region: "{{ hostvars[host]['region'] | default('N/A') }}"
+{% endfor %}

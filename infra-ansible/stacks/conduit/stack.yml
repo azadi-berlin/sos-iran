@@ -1,0 +1,4 @@
+stack_directories:
+  - path: /srv/conduit/data
+    owner: 1000
+    group: 1000

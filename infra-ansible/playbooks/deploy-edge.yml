@@ -1,0 +1,5 @@
+- hosts: edge
+  roles:
+    - role: compose_stack
+      vars:
+        stack_name: monitoring

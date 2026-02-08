@@ -1,0 +1,10 @@
+services:
+  conduit:
+    container_name: conduit
+    image: ghcr.io/psiphon-inc/conduit/cli:latest
+    command: start -b -1 -m 50 --metrics-addr :9090
+    volumes:
+      - /srv/conduit/data:/home/conduit/data
+    ports:
+      - "{{ vpn_ip }}:9090:9090"
+    restart: unless-stopped

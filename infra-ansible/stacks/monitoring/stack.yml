@@ -1,0 +1,13 @@
+stack_directories:
+  - path: /srv/monitoring/prometheus
+    owner: 65534
+    group: 65534
+  - path: /srv/monitoring/prometheus/data
+    owner: 65534
+    group: 65534
+  - path: /srv/monitoring/grafana
+    owner: 472
+    group: 472
+stack_template_files:
+  - name: "prometheus.yml.j2"
+    dest: "/srv/monitoring/prometheus/prometheus.yml"

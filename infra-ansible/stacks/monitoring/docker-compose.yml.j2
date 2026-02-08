@@ -1,0 +1,17 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - /srv/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /srv/monitoring/prometheus/data:/prometheus
+    restart: unless-stopped
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - /srv/monitoring/grafana:/var/lib/grafana
+    restart: unless-stopped

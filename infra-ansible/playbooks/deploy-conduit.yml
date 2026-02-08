@@ -1,0 +1,9 @@
+- hosts: conduit
+  become: true
+
+  tasks:
+    - name: Deploy conduit stack
+      include_role:
+        name: compose_stack
+      vars:
+        stack_name: conduit

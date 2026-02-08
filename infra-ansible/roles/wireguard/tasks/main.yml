@@ -1,0 +1,54 @@
+- name: Install wireguard
+  apt:
+    name: wireguard
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Generate private key if not exists
+  command: wg genkey
+  register: private_key
+  args:
+    creates: /etc/wireguard/privatekey
+  become: true
+
+- name: Save private key
+  copy:
+    content: "{{ private_key.stdout }}"
+    dest: /etc/wireguard/privatekey
+    mode: '0600'
+  when: private_key.changed
+  become: true
+
+- name: Read private key
+  slurp:
+    src: /etc/wireguard/privatekey
+  register: private_key_file
+  become: true
+
+- set_fact:
+    wg_private_key: "{{ private_key_file.content | b64decode }}"
+
+- name: Generate public key
+  shell: "wg pubkey < /etc/wireguard/privatekey"
+  register: public_key
+  changed_when: false
+  become: true
+
+- set_fact:
+    wg_public_key: "{{ public_key.stdout }}"
+
+- name: Create wireguard config
+  template:
+    src: wg0.conf.j2
+    dest: /etc/wireguard/wg0.conf
+    mode: '0600'
+  notify: Restart wireguard
+  become: true
+
+- name: Ensure wg0 is started
+  systemd:
+    name: wg-quick@wg0
+    state: started
+    enabled: true
+  become: true
