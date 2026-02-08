@@ -1,4 +1,6 @@
 - hosts: edge
+  become: true
+
   roles:
     - role: compose_stack
       vars:
