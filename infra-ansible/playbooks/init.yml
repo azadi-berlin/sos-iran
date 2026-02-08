@@ -2,3 +2,4 @@
   roles:
     - ufw
     - docker
+    - wireguard
