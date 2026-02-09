@@ -1,0 +1,43 @@
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: enable nginx
+  service:
+    name: nginx
+    enabled: true
+    state: started
+
+- name: discover nginx site templates
+  set_fact:
+    nginx_site_templates: >-
+      {{ lookup('fileglob', '../templates/sites/*.j2', wantlist=True)
+         | map('basename')
+         | list
+      }}
+
+- name: deploy nginx site configs
+  template:
+    src: "sites/{{ item }}"
+    dest: "/etc/nginx/sites-available/{{ item | regex_replace('.j2$', '') }}"
+  loop: "{{ nginx_site_templates }}"
+
+- name: enable nginx sites
+  file:
+    src: "/etc/nginx/sites-available/{{ item | regex_replace('.j2$', '') }}"
+    dest: "/etc/nginx/sites-enabled/{{ item | regex_replace('.j2$', '') }}"
+    state: link
+  loop: "{{ nginx_site_templates }}"
+
+- name: test nginx config
+  command: nginx -t
+  register: nginx_test
+  changed_when: false
+
+- name: reload nginx if config valid
+  service:
+    name: nginx
+    state: reloaded
+  when: nginx_test.rc == 0

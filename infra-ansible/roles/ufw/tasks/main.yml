@@ -10,6 +10,12 @@
     rule: allow
     name: OpenSSH
 
+- name: Allow Nginx
+  community.general.ufw:
+    rule: allow
+    name: "Nginx Full"
+  when: "'edge' in group_names"
+
 - name: Allow VPN network
   community.general.ufw:
     rule: allow
