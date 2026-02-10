@@ -2,7 +2,7 @@
   become: true
 
   roles:
-    - nginx
+    - caddy
     - role: compose_stack
       vars:
         stack_name: monitoring

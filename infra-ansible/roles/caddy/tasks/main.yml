@@ -1,0 +1,17 @@
+- name: install caddy
+  apt:
+    name: caddy
+    update_cache: yes
+    state: present
+
+- name: deploy Caddyfile
+  template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+  notify: restart caddy
+
+- name: enable caddy
+  service:
+    name: caddy
+    enabled: true
+    state: started
