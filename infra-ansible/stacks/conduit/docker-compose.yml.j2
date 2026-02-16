@@ -11,7 +11,7 @@ services:
   conduit-shirokhorshid:
     container_name: conduit-shirokhorshid
     image: ghcr.io/ssmirr/conduit/conduit:latest
-    command: start -b -1 -m 150 --metrics-addr :9090 --compartment shirokhorshid
+    command: start -b -1 -m 50 --metrics-addr :9090 --compartment shirokhorshid
     volumes:
       - /srv/conduit/data:/home/conduit-shirokhorshid/data
     ports:
