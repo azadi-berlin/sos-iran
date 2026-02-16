@@ -12,4 +12,11 @@ scrape_configs:
           provider: "{{ hostvars[host]['provider'] | default('N/A') }}"
           country: "{{ hostvars[host]['country'] | default('N/A') }}"
           region: "{{ hostvars[host]['region'] | default('N/A') }}"
+      - targets: ["{{ hostvars[host]['vpn_ip'] }}:9091"]
+        labels:
+          node: kh-{{ host }}
+          zone: "{{ hostvars[host]['zone'] | default('N/A') }}"
+          provider: "{{ hostvars[host]['provider'] | default('N/A') }}"
+          country: "{{ hostvars[host]['country'] | default('N/A') }}"
+          region: "{{ hostvars[host]['region'] | default('N/A') }}"
 {% endfor %}
