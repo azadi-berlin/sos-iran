@@ -2,7 +2,7 @@ services:
   conduit:
     container_name: conduit
     image: ghcr.io/psiphon-inc/conduit/cli:latest
-    command: start -b -1 -m 50 --metrics-addr :9090
+    command: start -b -1 -m 150 --metrics-addr :9090
     volumes:
       - /srv/conduit/data:/home/conduit/data
     ports:
