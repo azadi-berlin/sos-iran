@@ -1,0 +1,5 @@
+vpn_ip: 10.100.1.19
+zone: eu-central
+provider: hetzner
+country: Germany
+region: Nuremberg
