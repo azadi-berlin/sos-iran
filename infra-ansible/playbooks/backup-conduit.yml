@@ -1,0 +1,11 @@
+- name: Backup conduit stack
+  hosts: conduit
+
+  vars:
+    stack_name: conduit
+
+  vars_files:
+    - "../stacks/conduit/stack.yml"
+
+  roles:
+    - backup_stack

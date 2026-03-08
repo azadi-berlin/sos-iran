@@ -1,0 +1,29 @@
+- name: Ensure local backup directory exists
+  delegate_to: localhost
+  run_once: true
+  file:
+    path: "./backups/{{ stack_name }}"
+    state: directory
+    mode: "0755"
+
+- name: Archive stack directories
+  become: true
+  ansible.builtin.archive:
+    path: "{{ item.path }}"
+    dest: "/tmp/{{ stack_name }}-{{ item.path | basename }}.tar.gz"
+    format: gz
+  loop: "{{ stack_directories }}"
+
+- name: Fetch archive to local machine
+  fetch:
+    src: "/tmp/{{ stack_name }}-{{ item.path | basename }}.tar.gz"
+    dest: "../backups/{{ stack_name }}/{{ inventory_hostname }}-{{ item.path | basename }}.tar.gz"
+    flat: true
+  loop: "{{ stack_directories }}"
+
+- name: Remove temporary archives
+  become: true
+  file:
+    path: "/tmp/{{ stack_name }}-{{ item.path | basename }}.tar.gz"
+    state: absent
+  loop: "{{ stack_directories }}"
