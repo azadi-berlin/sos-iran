@@ -1,0 +1,23 @@
+---
+- name: Ensure SSH users exist (optional)
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    create_home: "{{ item.create_home | default(true) }}"
+    shell: "{{ item.shell | default(omit) }}"
+  loop: "{{ ssh_authorized_users }}"
+  when:
+    - ssh_create_users | bool
+    - ssh_authorized_users | length > 0
+
+- name: Install authorized SSH keys
+  ansible.builtin.authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: present
+    manage_dir: true
+    exclusive: "{{ ssh_exclusive | bool }}"
+  loop: "{{ ssh_authorized_users | subelements('keys', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}"
+  when: ssh_authorized_users | length > 0

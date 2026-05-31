@@ -1,0 +1,12 @@
+---
+# Optional inventory-specific overrides for the ssh_keys role.
+ssh_authorized_users:
+  - name: root
+    keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILmxKHtDx3LZh3FPeg+8nqwWnPXAQc4eZmDOQqccd0ye"
+
+# Set to true if you want Ansible to create users that do not exist yet.
+# ssh_create_users: false
+
+# Set to true to remove keys not listed above for the managed users.
+# ssh_exclusive: false
