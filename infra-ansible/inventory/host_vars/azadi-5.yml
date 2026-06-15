@@ -1,5 +1,0 @@
-vpn_ip: 10.100.1.5
-zone: us-east
-provider: hetzner
-country: US
-region: Ashburn, VA
