@@ -4,6 +4,7 @@ ssh_authorized_users:
   - name: root
     keys:
       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILmxKHtDx3LZh3FPeg+8nqwWnPXAQc4eZmDOQqccd0ye"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAx5FHuSFX7N6hl0GPHnXb8nejsao9DEVhmh3NpdbmYd"
 
 # Set to true if you want Ansible to create users that do not exist yet.
 # ssh_create_users: false
