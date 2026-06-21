@@ -3,3 +3,4 @@ zone: eu-central
 provider: hetzner
 country: Germany
 region: Falkenstein
+conduit_max_connections: 150

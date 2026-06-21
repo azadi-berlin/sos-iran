@@ -3,3 +3,4 @@ zone: eu-central
 provider: hetzner
 country: Germany
 region: Nuremberg
+conduit_max_connections: 150

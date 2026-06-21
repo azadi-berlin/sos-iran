@@ -2,4 +2,5 @@ vpn_ip: 10.100.1.5
 zone: eu-central
 provider: hetzner
 country: Finland
-region: Helsinki
+region: Helsinkia
+conduit_max_connections: 150
