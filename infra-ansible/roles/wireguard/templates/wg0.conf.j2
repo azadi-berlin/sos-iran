@@ -4,7 +4,7 @@ ListenPort = {{ vpn_port }}
 PrivateKey = {{ wg_private_key }}
 
 {% for host in groups['all'] %}
-{% if host != inventory_hostname %}
+{% if host != inventory_hostname and hostvars[host].wg_public_key is defined %}
 [Peer]
 PublicKey = {{ hostvars[host].wg_public_key }}
 AllowedIPs = {{ hostvars[host].vpn_ip }}/32
