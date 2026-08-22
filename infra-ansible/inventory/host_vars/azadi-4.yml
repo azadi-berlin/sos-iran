@@ -3,4 +3,4 @@ zone: eu-central
 provider: hetzner
 country: Finland
 region: Helsinki
-conduit_max_connections: 150
+conduit_max_connections: 180

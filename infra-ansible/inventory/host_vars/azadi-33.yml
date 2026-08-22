@@ -1,6 +1,6 @@
-vpn_ip: 10.100.1.6
+vpn_ip: 10.100.1.33
 zone: eu-central
 provider: hetzner
-country: Germany
-region: Nuremberg
+country: Finland
+region: Helsinki
 conduit_max_connections: 480

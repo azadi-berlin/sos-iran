@@ -1,6 +1,6 @@
-vpn_ip: 10.100.1.6
+vpn_ip: 10.100.1.15
 zone: eu-central
 provider: hetzner
 country: Germany
-region: Nuremberg
+region: Falkenstein
 conduit_max_connections: 480
