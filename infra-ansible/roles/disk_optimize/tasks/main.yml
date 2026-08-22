@@ -1,0 +1,96 @@
+---
+- file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: '0755'
+  become: true
+
+- template:
+    src: journald-disk.conf.j2
+    dest: /etc/systemd/journald.conf.d/disk.conf
+    mode: '0644'
+  notify: restart systemd-journald
+  become: true
+
+- template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.conf
+    mode: '0644'
+  become: true
+
+- template:
+    src: logrotate-syslog.j2
+    dest: /etc/logrotate.d/syslog
+    mode: '0644'
+  become: true
+
+- file:
+    path: /var/log/btmp
+    state: absent
+  when: disable_btmp
+  become: true
+
+- file:
+    path: /var/log/wtmp
+    state: absent
+  when: disable_wtmp
+  become: true
+
+- command: journalctl --vacuum-time=30d
+  changed_when: false
+  become: true
+
+- template:
+    src: log-cleanup.j2
+    dest: /etc/cron.daily/disk-cleanup
+    mode: '0755'
+  become: true
+
+- file:
+    path: /var/log
+    mode: '0755'
+  become: true
+
+- file:
+    path: /etc/sysctl.conf
+    state: touch
+  become: true
+
+- lineinfile:
+    path: /etc/sysctl.conf
+    line: "kernel.acct=0"
+    state: present
+  notify: reload sysctl
+  become: true
+
+- lineinfile:
+    path: /etc/sysctl.conf
+    line: "kernel.core_uses_pid=1"
+    state: present
+  notify: reload sysctl
+  become: true
+
+- apt:
+    name:
+      - bc
+      - xz-utils
+    state: present
+  become: true
+
+- template:
+    src: docker-cleanup.j2
+    dest: /etc/cron.daily/docker-cleanup
+    mode: '0755'
+  become: true
+
+- template:
+    src: apt-cleanup.j2
+    dest: /etc/cron.daily/apt-cleanup
+    mode: '0755'
+  become: true
+
+- template:
+    src: tmp-cleanup.j2
+    dest: /etc/cron.daily/tmp-cleanup
+    mode: '0755'
+  become: true

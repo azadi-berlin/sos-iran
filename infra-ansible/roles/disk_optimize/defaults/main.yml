@@ -1,0 +1,17 @@
+---
+journald_max_use: "500M"
+journald_max_file_size: "100M"
+journald_compress: "yes"
+journald_storage: "persistent"
+
+logrotate_daily: true
+logrotate_compress: true
+logrotate_delaycompress: true
+logrotate_maxage: 30
+
+syslog_rotate_size: "100M"
+auth_log_rotate_size: "50M"
+kern_log_rotate_size: "50M"
+
+disable_btmp: true
+disable_wtmp: false

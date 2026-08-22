@@ -1,0 +1,5 @@
+#!/bin/bash
+find /tmp -type f -atime +7 -delete 2>/dev/null || true
+find /var/tmp -type f -atime +7 -delete 2>/dev/null || true
+find /tmp -type d -empty -delete 2>/dev/null || true
+find /var/tmp -type d -empty -delete 2>/dev/null || true

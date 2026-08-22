@@ -1,0 +1,20 @@
+/var/log/syslog
+/var/log/auth.log
+/var/log/kern.log
+/var/log/ufw.log
+/var/log/dmesg
+{
+	rotate {{ logrotate_maxage | int // 7 }}
+	daily
+	missingok
+	notifempty
+	compress
+	compresscmd /usr/bin/xz
+	uncompresscmd /usr/bin/unxz
+	compressext .xz
+	delaycompress
+	sharedscripts
+	postrotate
+		/lib/systemd/systemd-fsck-root || true
+	endscript
+}

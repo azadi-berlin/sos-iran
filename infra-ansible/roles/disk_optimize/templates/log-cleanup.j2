@@ -1,0 +1,4 @@
+#!/bin/bash
+journalctl --vacuum-time=30d
+find /var/log -type f -mtime +30 -delete 2>/dev/null || true
+find /var/log -type f -name "*.gz" -mtime +60 -delete 2>/dev/null || true

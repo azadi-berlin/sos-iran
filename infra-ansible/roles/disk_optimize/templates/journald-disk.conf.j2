@@ -1,0 +1,9 @@
+[Journal]
+MaxUse={{ journald_max_use }}
+MaxFileSize={{ journald_max_file_size }}
+Compress={{ journald_compress | lower }}
+Storage={{ journald_storage }}
+ForwardToSyslog=yes
+RateLimitInterval=0
+RateLimitBurst=0
+RuntimeKeepFree=100M

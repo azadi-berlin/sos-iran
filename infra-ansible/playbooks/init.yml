@@ -6,3 +6,4 @@
     - ufw
     - docker
     - wireguard
+    - disk_optimize

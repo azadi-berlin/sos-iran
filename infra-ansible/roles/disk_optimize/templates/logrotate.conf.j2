@@ -1,0 +1,10 @@
+weekly
+rotate 4
+create
+{% if logrotate_compress %}
+compress
+{% endif %}
+{% if logrotate_delaycompress %}
+delaycompress
+{% endif %}
+include /etc/logrotate.d
